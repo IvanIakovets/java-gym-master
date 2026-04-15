@@ -34,7 +34,7 @@ public class Timetable {
     }
 
     public TreeMap<TimeOfDay, ArrayList<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
-        return timetable.get(dayOfWeek);// возвращает расписание за день, сложность при этом будет так как метод у HashMap работает за О(1)
+        return timetable.getOrDefault(dayOfWeek, new TreeMap<>());// возвращает расписание за день, сложность при этом будет так как метод у HashMap работает за О(1)
 
     }
 
@@ -42,7 +42,7 @@ public class Timetable {
         TreeMap<TimeOfDay, ArrayList<TrainingSession>> daySchedule;
 
         daySchedule = timetable.get(dayOfWeek); // получаем расписание по искомому дню, если такого нет создается пустая таблица
-        return daySchedule.get(timeOfDay); // возвращает список всех тренировок, если он пустой создает новый список сложность О(1)
+        return daySchedule.getOrDefault(timeOfDay, new ArrayList<>()); // возвращает список всех тренировок, если он пустой создает новый список сложность О(1)
     }
 
     public HashMap<Coach, Integer> getCountByCoaches() {
@@ -50,9 +50,9 @@ public class Timetable {
 
         for (DayOfWeek day : timetable.keySet()) {
             TreeMap<TimeOfDay, ArrayList<TrainingSession>> daySchedule = timetable.get(day);
-            for (TimeOfDay time : daySchedule.navigableKeySet()){
+            for (TimeOfDay time : daySchedule.navigableKeySet()) {
                 ArrayList<TrainingSession> timeTraining = daySchedule.get(time);
-                for (TrainingSession trainingSession : timeTraining){
+                for (TrainingSession trainingSession : timeTraining) {
                     Coach coachFromTimetable = trainingSession.getCoach();
                     coachesTraining.put(coachFromTimetable, coachesTraining.getOrDefault(coachFromTimetable, 0) + 1);
                 }
@@ -62,7 +62,7 @@ public class Timetable {
         return sortCoaches(coachesTraining);
     }
 
-    public HashMap<Coach, Integer> sortCoaches( HashMap<Coach, Integer> coachesTraining ) {
+    public HashMap<Coach, Integer> sortCoaches(HashMap<Coach, Integer> coachesTraining) {
         List<Map.Entry<Coach, Integer>> newCoachesTraining = new ArrayList<>(coachesTraining.entrySet());
 
         newCoachesTraining.sort((entry1,entry2) -> entry2.getValue().compareTo(entry1.getValue()));

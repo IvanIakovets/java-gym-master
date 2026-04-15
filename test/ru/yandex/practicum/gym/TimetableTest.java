@@ -22,7 +22,7 @@ public class TimetableTest {
         TreeMap<TimeOfDay, ArrayList<TrainingSession>> sessionsOnMonday = timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
         Assertions.assertEquals(1, sessionsOnMonday.size());
         Assertions.assertEquals(1, sessionsOnMonday.firstEntry().getValue().size());//Проверяем, что за понедельник вернулось одно занятие
-        assertNull(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY)); //Проверка, что за вторник не вернулось занятий
+        Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY).isEmpty()); //Проверка, что за вторник вернулся пустой список
     }
 
     @Test
@@ -65,7 +65,7 @@ public class TimetableTest {
         ArrayList<TimeOfDay> thursdayTimeList = new ArrayList<>(sessionsOnThursday.descendingKeySet());
         Assertions.assertTrue(thursdayTimeList.get(0).equals(timeOne) && thursdayTimeList.get(1).equals(timeTwo));
 
-        assertNull(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY));// Проверка, что за вторник не вернулось занятий
+        Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY).isEmpty());// Проверка, что за вторник вернулось пустое занятие
     }
 
     @Test
@@ -87,7 +87,7 @@ public class TimetableTest {
 
 
         Assertions.assertEquals(1, sessionsOnMondayAndTimeOne.size()); //Проверить, что за понедельник в 13:00 вернулось одно занятие
-        Assertions.assertNull(sessionsOnMondayAndTimeTwo); //Проверить, что за понедельник в 14:00 не вернулось занятий
+        Assertions.assertTrue(sessionsOnMondayAndTimeTwo.isEmpty()); //Проверить, что за понедельник в 14:00 вернулся пустой список
     }
 
     @Test
