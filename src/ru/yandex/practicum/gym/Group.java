@@ -1,5 +1,7 @@
 package ru.yandex.practicum.gym;
 
+import java.util.Objects;
+
 public class Group {
     //название группы
     private String title;
@@ -12,6 +14,21 @@ public class Group {
         this.title = title;
         this.age = age;
         this.duration = duration;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getAge(), getDuration());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return Objects.equals(getTitle(), group.getTitle()) &&
+                Objects.equals(getAge(), group.getAge()) &&
+                Objects.equals(getDuration(), group.getDuration());
     }
 
     public String getTitle() {

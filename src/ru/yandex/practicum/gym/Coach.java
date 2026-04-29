@@ -22,12 +22,14 @@ public class Coach {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coach coach = (Coach) o;
-        return Objects.equals(surname, coach.surname) && Objects.equals(name, coach.name) && Objects.equals(middleName, coach.middleName);
+        return Objects.equals(getSurname(), coach.getSurname()) &&
+                Objects.equals(getName(), coach.getName()) &&
+                Objects.equals(getMiddleName(), coach.getMiddleName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(surname, name, middleName);
+        return Objects.hash(getSurname(), getName(), getMiddleName());
     }
 
     public String getSurname() {
