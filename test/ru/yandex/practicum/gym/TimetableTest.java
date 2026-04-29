@@ -2,16 +2,27 @@ package ru.yandex.practicum.gym;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 import java.util.*;
 
 public class TimetableTest {
 
+    Timetable timetable;
+
+    @BeforeEach
+    void setUp() {
+        timetable = new Timetable();
+    }
+
+    @AfterEach
+    void tearDown() {
+        timetable = null;
+    }
+
     @Test
     void testGetTrainingSessionsForDaySingleSession() {
-        Timetable timetable = new Timetable();
-
         Group group = new Group("Акробатика для детей", Age.CHILD, 60);
         Coach coach = new Coach("Васильев", "Николай", "Сергеевич");
         TrainingSession singleTrainingSession = new TrainingSession(group, coach,
@@ -27,7 +38,6 @@ public class TimetableTest {
 
     @Test
     void testGetTrainingSessionsForDayMultipleSessions() {
-        Timetable timetable = new Timetable();
 
         Coach coach = new Coach("Васильев", "Николай", "Сергеевич");
 
@@ -70,7 +80,6 @@ public class TimetableTest {
 
     @Test
     void testGetTrainingSessionsForDayAndTime() {
-        Timetable timetable = new Timetable();
 
         Group group = new Group("Акробатика для детей", Age.CHILD, 60);
         Coach coach = new Coach("Васильев", "Николай", "Сергеевич");
@@ -92,7 +101,6 @@ public class TimetableTest {
 
     @Test
     void testGetTrainingSessionsForDayAndTimeMultipleSessions() {
-        Timetable timetable = new Timetable();
 
         Coach coachOne = new Coach("Васильев", "Николай", "Сергеевич");
 
@@ -111,14 +119,13 @@ public class TimetableTest {
         timetable.addNewTrainingSession(thursdayChildTrainingSession);
         TimeOfDay timeOne = new TimeOfDay( 13, 0);
 
-        ArrayList<TrainingSession> sessionsOnMondayAndTimeOne = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.THURSDAY, timeOne);
+        ArrayList<TrainingSession> sessionsOnThursdayAndTimeOne = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.THURSDAY, timeOne);
 
-        Assertions.assertEquals(2, sessionsOnMondayAndTimeOne.size());  //Проверить, что за понедельник в 13:00 вернулось два занятие
+        Assertions.assertEquals(2, sessionsOnThursdayAndTimeOne.size());  //Проверить, что за понедельник в 13:00 вернулось два занятие
     }
 
     @Test
     void testAddNewTrainingSessionOneCoach() {
-        Timetable timetable = new Timetable();
         TimeOfDay time = new TimeOfDay(13, 0);
 
         Group groupOne = new Group("Акробатика для детей", Age.CHILD, 60);
@@ -142,7 +149,6 @@ public class TimetableTest {
 
     @Test
     void testAddNewTrainingSessionOneGroup() {
-        Timetable timetable = new Timetable();
         TimeOfDay time = new TimeOfDay(13, 0);
 
         Group group = new Group("Акробатика для детей", Age.CHILD, 60);
@@ -165,8 +171,6 @@ public class TimetableTest {
 
     @Test
     void testGetCountByCoachesSingleAtDay() {
-        Timetable timetable = new Timetable();
-
         Group groupOne = new Group("Акробатика для детей", Age.CHILD, 60);
         Coach coachOne = new Coach("Васильев", "Николай", "Сергеевич");
         TrainingSession singleTrainingSessionOne = new TrainingSession(groupOne, coachOne,
@@ -190,8 +194,6 @@ public class TimetableTest {
 
     @Test
     void testGetCountByCoachesMultipleAtDay() {
-        Timetable timetable = new Timetable();
-
         Group groupOne = new Group("Акробатика для детей", Age.CHILD, 60);
         Coach coachOne = new Coach("Васильев", "Николай", "Сергеевич");
         TrainingSession singleTrainingSessionOne = new TrainingSession(groupOne, coachOne,
@@ -213,8 +215,6 @@ public class TimetableTest {
 
     @Test
     void testGetCountByCoachesMultipleAtDayAndTime() {
-        Timetable timetable = new Timetable();
-
         Group groupOne = new Group("Акробатика для детей", Age.CHILD, 60);
         Coach coachOne = new Coach("Васильев", "Николай", "Сергеевич");
         TrainingSession singleTrainingSessionOne = new TrainingSession(groupOne, coachOne,
@@ -238,8 +238,6 @@ public class TimetableTest {
 
     @Test
     void testGetCountByCoachesSortResult() {
-        Timetable timetable = new Timetable();
-
         Coach coachOne = new Coach("Петров", "Анатолий", "Митрофанович");
 
         Group groupAdultFlipOne = new Group("Заднее сальто для начинающих", Age.ADULT, 90);

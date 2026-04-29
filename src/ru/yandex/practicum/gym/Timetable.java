@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Timetable {
 
-    private static final Map<DayOfWeek, TreeMap<TimeOfDay,ArrayList<TrainingSession>>> timetable = new HashMap<>();
+    private final Map<DayOfWeek, TreeMap<TimeOfDay,ArrayList<TrainingSession>>> timetable = new HashMap<>();
 
     public boolean addNewTrainingSession(TrainingSession trainingSession) {
 
@@ -59,10 +59,15 @@ public class Timetable {
             }
         }
 
-        return sortCoaches(coachesTraining);
+        List<Map.Entry<Coach, Integer>> list = new ArrayList<>(coachesTraining.entrySet());
+        list.sort(Map.Entry.<Coach, Integer>comparingByValue().reversed());
+
+        return list.stream().collect(LinkedHashMap::new,
+                (m, e) -> m.put(e.getKey(),
+                        e.getValue()), LinkedHashMap::putAll);
     }
 
-    public HashMap<Coach, Integer> sortCoaches(HashMap<Coach, Integer> coachesTraining) {
+    /*public HashMap<Coach, Integer> sortCoaches(HashMap<Coach, Integer> coachesTraining) {
         List<Map.Entry<Coach, Integer>> newCoachesTraining = new ArrayList<>(coachesTraining.entrySet());
 
         newCoachesTraining.sort((entry1,entry2) -> entry2.getValue().compareTo(entry1.getValue()));
@@ -72,5 +77,5 @@ public class Timetable {
             sortedCoachesTraining.put(entry.getKey(), entry.getValue());
         }
         return sortedCoachesTraining;
-    }
+    }*/
 }
